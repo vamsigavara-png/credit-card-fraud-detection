@@ -1,0 +1,50 @@
+# Configuration for Credit Card Fraud Detection System
+
+# Data Configuration
+data:
+  input_path: 'data/creditcard.csv'
+  test_size: 0.2
+  random_state: 42
+  outlier_threshold: 3.0
+
+# Preprocessing Configuration
+preprocessing:
+  scaler_type: 'standard'  # 'standard' or 'robust'
+  sampling_strategy: 0.5
+  
+# Model Configuration
+models:
+  logistic_regression:
+    enabled: true
+    max_iter: 1000
+    random_state: 42
+  
+  random_forest:
+    enabled: true
+    n_estimators: 100
+    max_depth: 15
+    random_state: 42
+  
+  xgboost:
+    enabled: true
+    n_estimators: 100
+    max_depth: 6
+    learning_rate: 0.1
+    random_state: 42
+  
+  isolation_forest:
+    enabled: false
+    contamination: 0.001
+    random_state: 42
+
+# Evaluation Configuration
+evaluation:
+  best_model_metric: 'f1_score'  # 'f1_score', 'precision', 'recall', 'roc_auc'
+  threshold_optimization: true
+  threshold_metric: 'f1'  # 'f1', 'precision', 'recall'
+
+# Output Configuration
+output:
+  models_path: 'models/'
+  results_path: 'results/'
+  logs_path: 'logs/'
