@@ -11,12 +11,28 @@
   </header>
   <main>
     <ul>
-      <li><strong>GET /health</strong> — Health check.</li>
-      <li><strong>GET /model-info</strong> — Model metadata.</li>
-      <li><strong>POST /predict</strong> — Predict single transaction. Expects JSON {"features": [30 numbers], "threshold": 0.5}</li>
-      <li><strong>POST /predict-batch</strong> — Predict multiple transactions. Expects JSON {"transactions": [[...],[...]], "threshold": 0.5}</li>
+      <li><strong>GET /health</strong> — Health check. Returns service status and model name.</li>
+      <li><strong>GET /model-info</strong> — Model metadata (input size, model class, scaler presence).</li>
+      <li><strong>POST /predict</strong> — Predict single transaction. Expects JSON {"features": [30 numbers], "threshold": 0.5}.</li>
+      <li><strong>POST /predict-batch</strong> — Predict multiple transactions. Expects JSON {"transactions": [[...],[...]], "threshold": 0.5}.</li>
     </ul>
-    <p>From GitHub Pages you may need to provide the API URL (host and port) if the API runs separately.</p>
+
+    <h2>Quick Examples</h2>
+    <p>Replace <code>http://localhost:5000</code> with your API host if running elsewhere.</p>
+    <pre><code>curl http://localhost:5000/health
+
+curl -X POST http://localhost:5000/predict \
+  -H "Content-Type: application/json" \
+  -d '{"features": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,123.45]}'
+    </code></pre>
+
+    <h2>Troubleshooting</h2>
+    <ul>
+      <li>If the endpoint returns <code>Model not loaded</code>, confirm the model artifacts exist under <code>models/</code> (e.g. <code>xgb_model.pkl</code>, <code>scaler.pkl</code>).</li>
+      <li>Start the API in a terminal so you can read logs: <code>python -m api.app</code>. Any load errors will be printed.</li>
+      <li>If you deployed with Docker and the API is unreachable, ensure Docker Desktop is running and containers started with <code>docker-compose up</code>.</li>
+      <li>For cross-origin requests from GitHub Pages, ensure the API host allows requests or test locally.</li>
+    </ul>
   </main>
 </body>
 </html>

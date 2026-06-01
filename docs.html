@@ -10,13 +10,54 @@
     <h1>Documentation</h1>
   </header>
   <main>
-    <h2>How to run the project</h2>
-    <ol>
-      <li>Install Python and required packages from <code>requirements.txt</code>.</li>
-      <li>Train the model with <code>python main.py --mode train</code>.</li>
-      <li>Start the API: <code>python -m api.app</code>.</li>
-      <li>Use the <code>/predict</code> endpoint to get predictions.</li>
-    </ol>
+    <h2>Overview</h2>
+    <p>This documentation covers prerequisites, installation, training, running the API, and troubleshooting guidance for the project.</p>
+
+    <h2>Prerequisites</h2>
+    <ul>
+      <li>Python 3.8+ (3.10 recommended)</li>
+      <li>pip and virtualenv</li>
+      <li>Optional: Docker and Docker Compose for containerized runs</li>
+    </ul>
+
+    <h2>Quick Setup</h2>
+    <pre><code>python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\Activate
+pip install -r requirements.txt
+    </code></pre>
+
+    <h2>Training the Model</h2>
+    <p>Train the model and create persistent artifacts (model + scaler):</p>
+    <pre><code>python main.py --mode train
+# Artifacts are saved to the <code>models/</code> directory by default
+    </code></pre>
+
+    <h2>Run the API Locally</h2>
+    <p>Start the Flask API (loads saved model artifacts):</p>
+    <pre><code>python -m api.app
+# Default: listens on http://0.0.0.0:5000
+    </code></pre>
+
+    <h2>API Usage Examples</h2>
+    <p>Health check:</p>
+    <pre><code>curl http://localhost:5000/health</code></pre>
+
+    <p>Single transaction prediction (example with demo features):</p>
+    <pre><code>curl -X POST http://localhost:5000/predict \
+  -H "Content-Type: application/json" \
+  -d '{"features": [0,0, ..., 123.45]}'
+    </code></pre>
+
+    <h2>Troubleshooting</h2>
+    <ul>
+      <li>If the API reports <code>Model not loaded</code>, ensure the files <code>models/xgb_model.pkl</code> and <code>models/scaler.pkl</code> exist.</li>
+      <li>Check that dependencies from <code>requirements.txt</code> are installed and compatible.</li>
+      <li>To inspect logs, run the API from a terminal and watch startup messages; the app logs model-loading errors to stdout.</li>
+      <li>If using Docker, ensure Docker Desktop is running and then: <code>docker-compose up --build</code>.</li>
+    </ul>
+
+    <h2>Deployment</h2>
+    <p>GitHub Actions are included for Pages/Jekyll and Docker CI. For production API deployments, use a WSGI server (Gunicorn) or a container orchestration platform.</p>
   </main>
 </body>
 </html>
