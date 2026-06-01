@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Credit Card Fraud Detection</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 0; background: #f4f7fb; color: #1f2937; }
+    header { background: #0f172a; color: #fff; padding: 2rem 1rem; text-align: center; }
+    .container { max-width: 920px; margin: 2rem auto; padding: 1rem; }
+    .card { background: #fff; border-radius: 14px; box-shadow: 0 20px 45px rgba(15, 23, 42, 0.12); padding: 2rem; }
+    h1 { margin-top: 0; font-size: 2.5rem; }
+    p { margin: 1rem 0; }
+    .features { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top: 2rem; }
+    .feature { padding: 1rem; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; }
+    .footer { text-align: center; margin: 2rem 0 1rem; color: #475569; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Credit Card Fraud Detection</h1>
+    <p>Machine learning model and API for detecting fraudulent credit card transactions.</p>
+  </header>
+  <div class="container">
+    <div class="card">
+      <h2>What this project includes</h2>
+      <div class="features">
+        <div class="feature">
+          <h3>Data pipeline</h3>
+          <p>Loads and preprocesses credit card transaction data, handles outliers, scaling, and class imbalance.</p>
+        </div>
+        <div class="feature">
+          <h3>Model training</h3>
+          <p>Trains a fraud detection model using the cleaned dataset and saves the trained artifacts.</p>
+        </div>
+        <div class="feature">
+          <h3>API deployment</h3>
+          <p>Serves predictions through a Flask REST API for realtime fraud scoring.</p>
+        </div>
+      </div>
+      <p>Visit the repository on GitHub for details, or run the project locally with Python and Docker.</p>
+    </div>
+    <div class="card">
+      <h2>Repository</h2>
+      <p>This site is deployed from the repository <strong>vamsigavara-png/credit-card-fraud-detection</strong>.</p>
+      <p>If you want to test the API or model, use the code in the <code>api/</code> and <code>src/</code> folders.</p>
+    </div>
+    <div class="footer">
+      <p>Deployed with GitHub Pages. Last updated June 1, 2026.</p>
+    </div>
+  </div>
+</body>
+</html>

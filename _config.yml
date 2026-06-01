@@ -1,0 +1,23 @@
+exclude:
+  - .git
+  - .github
+  - .venv
+  - api
+  - config.yaml
+  - data
+  - docker-compose.yml
+  - Dockerfile
+  - DOCKER_README.md
+  - LICENSE
+  - Makefile
+  - models
+  - quickstart.sh
+  - README.md
+  - requirements.txt
+  - setup_docker.sh
+  - src
+  - test_api.sh
+  - test_docker.py
+  - credit-card-fraud-detection-main.zip
+  - creditcard.csv
+  - .env
