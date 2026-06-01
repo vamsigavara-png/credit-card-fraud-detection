@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>API - Credit Card Fraud Detection</title>
+</head>
+<body>
+  <header>
+    <h1>API Endpoints</h1>
+  </header>
+  <main>
+    <ul>
+      <li><strong>GET /health</strong> — Health check.</li>
+      <li><strong>GET /model-info</strong> — Model metadata.</li>
+      <li><strong>POST /predict</strong> — Predict single transaction. Expects JSON {"features": [30 numbers], "threshold": 0.5}</li>
+      <li><strong>POST /predict-batch</strong> — Predict multiple transactions. Expects JSON {"transactions": [[...],[...]], "threshold": 0.5}</li>
+    </ul>
+    <p>From GitHub Pages you may need to provide the API URL (host and port) if the API runs separately.</p>
+  </main>
+</body>
+</html>

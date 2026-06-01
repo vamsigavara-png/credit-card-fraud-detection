@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Detect - Credit Card Fraud Detection</title>
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;margin:2rem}
+    label{display:block;margin-top:1rem}
+    input[type=text], input[type=url]{width:100%;padding:0.5rem}
+    .row{display:flex;gap:1rem}
+    .col{flex:1}
+    button{margin-top:1rem;padding:0.6rem 1rem}
+    pre{background:#f4f4f4;padding:1rem;border-radius:6px}
+  </style>
+</head>
+<body>
+  <h1>Fraud Detection (single transaction)</h1>
+  <p>Enter transaction amount and optionally API base URL, then click <strong>Predict</strong>.</p>
+
+  <label>API Base URL (include protocol), leave empty to use demo mode:</label>
+  <input id="apiUrl" type="url" placeholder="http://localhost:5000" />
+
+  <label>Transaction Amount</label>
+  <input id="amount" type="text" placeholder="e.g. 123.45" />
+
+  <button id="predictBtn">Predict</button>
+  <button id="demoBtn">Demo Prediction (no API)</button>
+
+  <h2>Result</h2>
+  <pre id="result">No prediction yet.</pre>
+
+  <script>
+    function buildFeaturesFromAmount(amount){
+      // The model expects 30 features. We'll set all to 0 and put amount as the last feature (Amount).
+      const amt = parseFloat(amount) || 0.0;
+      const features = new Array(30).fill(0.0);
+      features[29] = amt;
+      return features;
+    }
+
+    async function predict(){
+      const apiUrl = document.getElementById('apiUrl').value.trim();
+      const amount = document.getElementById('amount').value.trim();
+      const features = buildFeaturesFromAmount(amount);
+      const resultEl = document.getElementById('result');
+
+      if(!apiUrl){
+        resultEl.textContent = 'API URL not provided. Use Demo Prediction instead or provide API URL.';
+        return;
+      }
+
+      try{
+        resultEl.textContent = 'Sending request...';
+        const res = await fetch(apiUrl.replace(/\/+$/,'') + '/predict', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ features })
+        });
+
+        const data = await res.json();
+        resultEl.textContent = JSON.stringify(data, null, 2);
+      }catch(err){
+        resultEl.textContent = 'Request failed: ' + err.message + '\n\nIf the API is not reachable from GitHub Pages, run this site locally or use the demo button.';
+      }
+    }
+
+    function demoPredict(){
+      const amount = parseFloat(document.getElementById('amount').value) || 0.0;
+      // crude heuristic: higher amounts slightly more likely fraudulent
+      const prob = Math.min(0.99, Math.tanh(amount/200)*0.5 + 0.02 + Math.random()*0.1);
+      const is_fraud = prob > 0.5;
+      const result = {
+        success: true,
+        fraud_probability: prob,
+        is_fraud: is_fraud,
+        confidence: Math.abs(prob - 0.5)
+      };
+      document.getElementById('result').textContent = JSON.stringify(result, null, 2);
+    }
+
+    document.getElementById('predictBtn').addEventListener('click', predict);
+    document.getElementById('demoBtn').addEventListener('click', demoPredict);
+  </script>
+</body>
+</html>
